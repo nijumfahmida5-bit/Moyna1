@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Moyna ❤️</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+background:linear-gradient(#0f2027,#2c5364,#ff9bb3);
+color:white;
+}
+
+/* stars */
+
+.star{
+position:fixed;
+width:2px;
+height:2px;
+background:white;
+border-radius:50%;
+opacity:.8;
+}
+
+/* animals */
+
+.animals{
+position:absolute;
+top:30px;
+display:flex;
+gap:40px;
+}
+
+.bunny{
+font-size:40px;
+animation:bounce 1.5s infinite;
+}
+
+.kitsune{
+font-size:40px;
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+}
+
+/* card */
+
+.card{
+background:white;
+color:black;
+padding:30px;
+border-radius:25px;
+text-align:center;
+width:85%;
+max-width:350px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* buttons */
+
+button{
+padding:14px 25px;
+font-size:18px;
+border:none;
+border-radius:25px;
+margin:10px;
+cursor:pointer;
+}
+
+#openBtn{background:#ff4d6d;color:white;}
+#yes{background:#ff4d6d;color:white;transition:.2s;}
+#no{background:#ddd;position:fixed;}
+
+/* message */
+
+#loveMessage{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+font-size:42px;
+font-weight:bold;
+color:#ff2e63;
+display:none;
+text-align:center;
+}
+
+@keyframes pop{
+0%{transform:translate(-50%,-50%) scale(0)}
+70%{transform:translate(-50%,-50%) scale(1.3)}
+100%{transform:translate(-50%,-50%) scale(1)}
+}
+
+/* petals */
+
+.petal{
+position:fixed;
+top:-20px;
+font-size:20px;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10vh)}
+100%{transform:translateY(110vh)}
+}
+
+/* hearts */
+
+.heart{
+position:fixed;
+animation:heartFall linear forwards;
+}
+
+@keyframes heartFall{
+0%{transform:translateY(-20px)}
+100%{transform:translateY(120vh)}
+}
+
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3">
+</audio>
+
+<div class="animals">
+<div id="bunny" class="bunny">🐰</div>
+<div id="kitsune" class="kitsune">🦊</div>
+</div>
+
+<div class="card" id="step1">
+
+<h2>💌 Moyna</h2>
+<p>You received a love letter</p>
+
+<button id="openBtn">Open Letter</button>
+
+</div>
+
+<div class="card" id="step2" style="display:none">
+
+<h2 id="question"></h2>
+
+<button id="yes">Yes ❤️</button>
+<button id="no">No</button>
+
+</div>
+
+<div id="loveMessage">I Love You Moyna ❤️</div>
+
+<script>
+
+/* stars */
+
+for(let i=0;i<90;i++){
+
+let star=document.createElement("div")
+
+star.className="star"
+
+star.style.left=Math.random()*100+"vw"
+star.style.top=Math.random()*100+"vh"
+
+document.body.appendChild(star)
+
+}
+
+/* typing */
+
+const text="Moyna ❤️ will you be my Valentine?"
+let i=0
+
+function typeText(){
+
+if(i<text.length){
+
+document.getElementById("question").innerHTML+=text.charAt(i)
+
+i++
+
+setTimeout(typeText,60)
+
+}
+
+}
+
+/* open letter */
+
+document.getElementById("openBtn").onclick=function(){
+
+document.getElementById("music").play()
+
+document.getElementById("step1").style.display="none"
+document.getElementById("step2").style.display="block"
+
+typeText()
+
+}
+
+/* no button */
+
+const noBtn=document.getElementById("no")
+const yesBtn=document.getElementById("yes")
+
+let scale=1
+
+function moveButton(){
+
+let x=Math.random()*(window.innerWidth-100)
+let y=Math.random()*(window.innerHeight-50)
+
+noBtn.style.left=x+"px"
+noBtn.style.top=y+"px"
+
+scale+=0.15
+yesBtn.style.transform="scale("+scale+")"
+
+}
+
+noBtn.addEventListener("click",moveButton)
+noBtn.addEventListener("touchstart",moveButton)
+
+/* yes */
+
+yesBtn.onclick=function(){
+
+document.getElementById("step2").style.display="none"
+
+let msg=document.getElementById("loveMessage")
+
+msg.style.display="block"
+msg.style.animation="pop 1s forwards"
+
+/* bunny hug */
+
+document.getElementById("bunny").innerHTML="🐰💖"
+
+/* kitsune hearts */
+
+for(let i=0;i<20;i++){
+
+let heart=document.createElement("div")
+
+heart.className="heart"
+heart.innerHTML="💖"
+
+heart.style.left=Math.random()*100+"vw"
+heart.style.top=Math.random()*40+"vh"
+
+heart.style.fontSize=(Math.random()*20+20)+"px"
+heart.style.animationDuration=(Math.random()*2+2)+"s"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>{heart.remove()},4000)
+
+}
+
+}
+
+/* sakura */
+
+function createPetal(){
+
+let petal=document.createElement("div")
+
+petal.className="petal"
+petal.innerHTML="🌸"
+
+petal.style.left=Math.random()*100+"vw"
+petal.style.animationDuration=(Math.random()*5+6)+"s"
+
+document.body.appendChild(petal)
+
+setTimeout(()=>{petal.remove()},9000)
+
+}
+
+setInterval(createPetal,1300)
+
+</script>
+
+</body>
+</html>
